@@ -21,7 +21,7 @@ export class CreateSemesterDto {
   yearId: number;
 }
 
-export class UpdateSemesterTodo {
+export class UpdateSemesterDto {
   @ApiProperty({
     description: 'Actualizar Semestre',
   })

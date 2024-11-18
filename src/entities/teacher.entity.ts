@@ -4,6 +4,7 @@ import {
   Column,
   ManyToMany,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Subject } from './subject.entity';
 import { Year } from './year.entity';
@@ -11,7 +12,7 @@ import { Year } from './year.entity';
 @Entity()
 export class Teacher {
   @PrimaryGeneratedColumn()
-  id: number;
+  id_teacher: number;
 
   @Column()
   fullName: string;
@@ -22,6 +23,6 @@ export class Teacher {
   @ManyToOne(() => Year, (year) => year.teacher)
   year: Year;
 
-  @ManyToMany(() => Subject, (subject: Subject) => subject.teachers)
-  subjects: Subject[];
+  @ManyToOne(() => Subject, (subject: Subject) => subject.teachers)
+  subjects: Subject;
 }

@@ -1,9 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Semester } from 'src/entities/semester.entity';
-import { CreateSemesterDto } from './dto/dto_semester';
+import { CreateSemesterDto, UpdateSemesterDto } from './dto/dto_semester';
 import { YearService } from 'src/year/year.service';
 import { SemesterController } from './semester.controller';
 
@@ -25,6 +29,7 @@ export class SemesterService {
 
   async create(createSemesterDto: CreateSemesterDto): Promise<Semester> {
     const year = await this.yearService.findOne(createSemesterDto.yearId);
+
     if (!year) {
       throw new BadRequestException(
         `Course with ID ${createSemesterDto.yearId} does not exist.`,
@@ -46,9 +51,32 @@ export class SemesterService {
     return this.semesterRepository.save(semester);
   }
 
-  
   async findAll(): Promise<Semester[]> {
     return this.semesterRepository.find({ relations: ['year'] });
-    
+  }
+
+  async findOne(id_semester: number): Promise<Semester> {
+    const semester = await this.semesterRepository.findOne({
+      where: { id_semester },
+      relations: ['year'],
+    });
+    if (!semester) {
+      throw new NotFoundException(`Year with ID ${id_semester} not found`);
+    }
+    return semester;
+  }
+
+  async update(
+    id_semester: number,
+    updateYearDto: UpdateSemesterDto,
+  ): Promise<Semester> {
+    const year = await this.findOne(id_semester);
+    Object.assign(year, updateYearDto);
+    return this.semesterRepository.save(year);
+  }
+
+  async remove(id_ysemester: number): Promise<void> {
+    const year = await this.findOne(id_ysemester);
+    await this.semesterRepository.remove(year);
   }
 }

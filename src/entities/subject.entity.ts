@@ -3,15 +3,14 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
-  JoinTable,
   ManyToOne,
   OneToMany,
 } from 'typeorm';
 import { SubjectType } from '../common/enums/subject-type.enum';
 import { Teacher } from './teacher.entity';
-import { Frequency } from './frecuency.entity';
 
 import { Semester } from './semester.entity';
+import { Frequency } from './frecuency.entity';
 
 @Entity()
 export class Subject {
@@ -24,14 +23,9 @@ export class Subject {
   @Column()
   totalHours_subject: number;
 
-  @Column({
-    type: 'simple-enum',
-    enum: SubjectType,
-  })
   type: SubjectType;
 
-  @ManyToMany(() => Teacher, (teacher) => teacher.subjects)
-  @JoinTable()
+  @OneToMany(() => Teacher, (teacher) => teacher.subjects)
   teachers: Teacher[];
 
   @OneToMany(() => Frequency, (frequency) => frequency.subject)

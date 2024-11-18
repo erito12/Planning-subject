@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SemesterModule } from './semester/semester.module';
-
 import { CourseModule } from './course/course.module';
-
 import { WeekModule } from './week/week.module';
 import { YearModule } from './year/year.module';
+import { TeacherModule } from './teacher/teacher.module';
+import { SubjectModule } from './subject/subject.module';
 
 @Module({
   imports: [
@@ -20,6 +20,8 @@ import { YearModule } from './year/year.module';
     CourseModule,
     WeekModule,
     YearModule,
+    TeacherModule,
+    SubjectModule,
   ],
 })
 export class AppModule {}
