@@ -1,4 +1,3 @@
-
 import {
   BadRequestException,
   Injectable,
@@ -19,15 +18,18 @@ export class SubjectService {
   ) {}
 
   async create(createSubjectDto: CreateSubjectDto): Promise<Subject> {
-    const semeser = await this.semesterService.findOne(createSubjectDto.semesterId);
-    if (!semeser) {
+    const semester = await this.semesterService.findOne(
+      createSubjectDto.semesterId,
+    );
+    if (!semester) {
       throw new BadRequestException(
         `Course with ID ${createSubjectDto.semesterId} does not exist.`,
       );
     }
     const subject = new Subject();
-    subject.name_subject= createSubjectDto.name_subject;
-    subject.semester = semeser;
+    subject.name_subject = createSubjectDto.name_subject;
+    subject.totalHours_subject = createSubjectDto.totalHours_subject;
+    subject.semester = semester;
 
     return this.subjectRepository.save(subject);
   }
@@ -47,7 +49,10 @@ export class SubjectService {
     return subject;
   }
 
-  async update(id_subject: number, updateSubjectDto: UpdateSubjectDto): Promise<Subject> {
+  async update(
+    id_subject: number,
+    updateSubjectDto: UpdateSubjectDto,
+  ): Promise<Subject> {
     const subject = await this.findOne(id_subject);
     Object.assign(subject, updateSubjectDto);
     return this.subjectRepository.save(subject);

@@ -23,8 +23,6 @@ export class Subject {
   @Column()
   totalHours_subject: number;
 
-  type: SubjectType;
-
   @OneToMany(() => Teacher, (teacher) => teacher.subjects)
   teachers: Teacher[];
 

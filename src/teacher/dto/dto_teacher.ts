@@ -1,10 +1,13 @@
 // dto/create-teacher.dto.ts
-import { IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateTeacherDto {
+  @ApiProperty({ description: 'nombre y apellidos' })
   @IsString()
   fullName: string;
 
+  @ApiProperty({ description: 'Nivel escolar' })
   @IsString()
   academicDegree: string;
 
