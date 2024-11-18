@@ -35,18 +35,24 @@ export class SemesterService {
         `Course with ID ${createSemesterDto.yearId} does not exist.`,
       );
     }
+    // Convertir las fechas a objetos Date
+    const startDate = new Date(createSemesterDto.startDateSemester);
+    const endDate = new Date(createSemesterDto.endDateSemester);
+
+    // Verificar que las fechas sean válidas
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      throw new BadRequestException('Invalid start or end date.');
+    }
 
     // Calcular el total de semanas
-    const totalWeeks = this.calculateTotalWeeks(
-      createSemesterDto.endDateSemester,
-      createSemesterDto.startDateSemester,
-    );
+    const totalWeeks = this.calculateTotalWeeks(startDate, endDate);
 
     const semester = new Semester();
     semester.name_semester = createSemesterDto.name_semester;
-    semester.startDateSemester = createSemesterDto.startDateSemester;
-    semester.endDateSemester = createSemesterDto.endDateSemester;
+    semester.startDateSemester = startDate;
+    semester.endDateSemester = endDate;
     semester.totalWeeks = totalWeeks; // Asignar el total de semanas calculado
+    semester.year = year;
 
     return this.semesterRepository.save(semester);
   }
@@ -75,8 +81,8 @@ export class SemesterService {
     return this.semesterRepository.save(year);
   }
 
-  async remove(id_ysemester: number): Promise<void> {
-    const year = await this.findOne(id_ysemester);
+  async remove(id_semester: number): Promise<void> {
+    const year = await this.findOne(id_semester);
     await this.semesterRepository.remove(year);
   }
 }

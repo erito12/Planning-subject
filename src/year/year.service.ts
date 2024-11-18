@@ -17,7 +17,7 @@ export class YearService {
     private readonly courseService: CourseService,
   ) {}
 
-  async create(createYearDto: CreateYearDto): Promise<Year> { 
+  async create(createYearDto: CreateYearDto): Promise<Year> {
     const course = await this.courseService.findOne(createYearDto.courseId);
     if (!course) {
       throw new BadRequestException(
@@ -25,7 +25,7 @@ export class YearService {
       );
     }
     const year = new Year();
-    year.name_year = createYearDto.name_year;
+
     year.course = course;
 
     return this.yearRepository.save(year);
@@ -37,7 +37,7 @@ export class YearService {
 
   async findOne(id_year: number): Promise<Year> {
     const year = await this.yearRepository.findOne({
-      where: { id_year }, 
+      where: { id_year },
       relations: ['course'],
     });
     if (!year) {
