@@ -11,14 +11,18 @@ export class WeekService {
   ) {}
   // Método para encontrar una semana por ID
 
-  async findWeeksBySemester(semesterId: number): Promise<Week[]> {
-    return this.weekRepository.find({
-      where: { semester: { id_semester: semesterId } },
-    });
+  async findWeekById(id_week: number): Promise<Week> {
+    const week = await this.weekRepository.findOne({ where: { id_week } });
+    if (!week) {
+      throw new NotFoundException(`Semana con ID ${id_week} no encontrada`);
+    }
+    return week;
   }
 
-  // // Método para listar todas las semanas
-  // async findAll(): Promise<Week[]> {
-  //   return this.weekRepository.find({ relations: ['semester'] });
-  // }
+  async findWeeksBySemester(semesterId: number): Promise<Week[]> {
+    const response = this.weekRepository.find({
+      where: { semester: { id_semester: semesterId } },
+    });
+    return response;
+  }
 }

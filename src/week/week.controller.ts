@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { WeekService } from './week.service';
 import { Week } from 'src/entities/week.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -8,19 +8,22 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class WeekController {
   constructor(private readonly weekService: WeekService) {}
 
-  @ApiOperation({ summary: 'Buscar una semana por ID' })
-  @ApiResponse({ status: 201, description: 'La semana ha sido encontrada' })
+  @ApiOperation({ summary: 'Buscar todas las semanas' })
+  @ApiResponse({ status: 201, description: 'Busqueda Exitosa' })
   @Get(':id')
   async getWeek(@Param('id') id: number): Promise<Week[]> {
     return this.weekService.findWeeksBySemester(id);
   }
 
-  // Ruta para listar todas las semanas
-
-  // @ApiOperation({ summary: 'Buscar todas las semanas' })
-  // @ApiResponse({ status: 201, description: 'Semanas encontradas' })
-  // @Get()
-  // async getAllWeeks(): Promise<Week[]> {
-  //   return this.weekService.findAll();
-  // }
+  // Endpoint para obtener una semana por ID
+  @ApiOperation({ summary: 'Buscar una semana por ID asadsad' })
+  @ApiResponse({ status: 201, description: 'La semana ha sido encontrada' })
+  @Get(':id_week')
+  async getWeekById(@Param('id') id: number): Promise<Week> {
+    const week = await this.weekService.findWeekById(id);
+    if (!week) {
+      throw new NotFoundException(`Semana con ID ${id} no encontrada`);
+    }
+    return week;
+  }
 }

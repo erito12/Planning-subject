@@ -12,7 +12,7 @@ export class Frequency {
   frequencyType: SubjectType;
 
   @Column()
-  frecuencyDay: string;
+  numberFrequency: number;
 
   @ManyToOne(() => Week, (week) => week.frequencies)
   week: Week;

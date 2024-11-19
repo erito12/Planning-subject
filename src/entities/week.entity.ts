@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Semester } from './semester.entity';
-import { Frequency } from './frecuency.entity';
+import { Frequency } from './frequency.entity';
 
 @Entity()
 export class Week {

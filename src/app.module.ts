@@ -6,6 +6,7 @@ import { WeekModule } from './week/week.module';
 import { YearModule } from './year/year.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { SubjectModule } from './subject/subject.module';
+import { FrenquencyWeekModule } from './frenquency_week/frenquency_week.module';
 
 @Module({
   imports: [
@@ -22,6 +23,8 @@ import { SubjectModule } from './subject/subject.module';
     YearModule,
     TeacherModule,
     SubjectModule,
+
+    FrenquencyWeekModule,
   ],
 })
 export class AppModule {}
