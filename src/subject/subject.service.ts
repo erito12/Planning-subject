@@ -23,7 +23,7 @@ export class SubjectService {
     );
     if (!semester) {
       throw new BadRequestException(
-        `Course with ID ${createSubjectDto.semesterId} does not exist.`,
+        `El curso con ID ${createSubjectDto.semesterId} no existe.`,
       );
     }
     const subject = new Subject();

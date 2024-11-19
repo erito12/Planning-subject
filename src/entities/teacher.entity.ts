@@ -1,13 +1,7 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Subject } from './subject.entity';
 import { Year } from './year.entity';
+import { Semester } from './semester.entity';
 
 @Entity()
 export class Teacher {
@@ -20,9 +14,9 @@ export class Teacher {
   @Column()
   academicDegree: string;
 
-  @ManyToOne(() => Year, (year) => year.teacher)
-  year: Year;
+  @ManyToOne(() => Semester, (semester) => semester.teacher)
+  semester: Semester;
 
   @ManyToOne(() => Subject, (subject: Subject) => subject.teachers)
-  subjects: Subject;
+  subject: Subject;
 }

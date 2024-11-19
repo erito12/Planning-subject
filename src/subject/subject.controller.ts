@@ -45,9 +45,9 @@ export class SubjectController {
   @ApiResponse({ status: 404, description: 'Año no encontrado.' })
   async update(
     @Param('id') id: number,
-    @Body() updateYearDto: UpdateSubjectDto,
+    @Body() updatesubjectDto: UpdateSubjectDto,
   ): Promise<Subject> {
-    return this.subjectService.update(id, updateYearDto);
+    return this.subjectService.update(id, updatesubjectDto);
   }
 
   @Delete(':id')

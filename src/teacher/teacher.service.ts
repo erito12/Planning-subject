@@ -1,37 +1,75 @@
-// // teacher.service.ts
-// import { Injectable } from '@nestjs/common';
-// import { InjectRepository } from '@nestjs/typeorm';
-// import { Teacher } from 'src/entities/teacher.entity';
-// import { Repository } from 'typeorm';
-// import { CreateTeacherDto } from './dto/dto_teacher';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Teacher } from 'src/entities/teacher.entity';
+import { SemesterService } from 'src/semester/semester.service';
+import { SubjectService } from 'src/subject/subject.service';
+import { CreateTeacherDto, UpdateTeacherDto } from './dto/dto_teacher';
 
+@Injectable()
+export class TeacherService {
+  constructor(
+    @InjectRepository(Teacher)
+    private readonly teacherRepository: Repository<Teacher>,
+    private readonly semesterService: SemesterService,
+    private readonly subjectService: SubjectService,
+  ) {}
 
-// @Injectable()
-// export class TeacherService {
-//   constructor(
-//     @InjectRepository(Teacher)
-//     private readonly teacherRepository: Repository<Teacher>,
-//   ) {}
+  async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
+    const semester = await this.semesterService.findOne(
+      createTeacherDto.semesterId,
+    );
+    const subject = await this.subjectService.findOne(
+      createTeacherDto.subjectId,
+    );
+    if (!semester) {
+      throw new BadRequestException(
+        `El curso con ID ${createTeacherDto.semesterId}  no existe.`,
+      );
+    } else if (!subject) {
+      throw new BadRequestException(
+        `La asignatura con ID ${createTeacherDto.subjectId}  no existe.`,
+      );
+    }
+    const teacher = new Teacher();
+    teacher.fullName = createTeacherDto.fullName;
+    teacher.academicDegree = createTeacherDto.academicDegree;
+    teacher.semester = semester;
+    teacher.subject = subject;
 
-//   async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
-//     const teacher = this.teacherRepository.create(createTeacherDto);
-//     return await this.teacherRepository.save(teacher);
-//   }
+    return this.teacherRepository.save(subject);
+  }
 
-//   async findAll(): Promise<Teacher[]> {
-//     return await this.teacherRepository.find({ relations: ['subjects'] });
-//   }
+  async findAll(): Promise<Teacher[]> {
+    return this.teacherRepository.find({ relations: ['semester', 'subject'] });
+  }
 
-//   async findOne(id: number): Promise<Teacher> {
-//     return await this.teacherRepository.findOne(id, { relations: ['subjects'] });
-//   }
+  async findOne(id_teacher: number): Promise<Teacher> {
+    const teacher = await this.teacherRepository.findOne({
+      where: { id_teacher },
+      relations: ['semester', 'subject'],
+    });
+    if (!teacher) {
+      throw new NotFoundException(`Year with ID ${id_teacher} not found`);
+    }
+    return teacher;
+  }
 
-//   async update(id: number, updateTeacherDto: Partial<Teacher>): Promise<Teacher> {
-//     await this.teacherRepository.update(id, updateTeacherDto);
-//     return this.findOne(id);
-//   }
+  async update(
+    id_teacher: number,
+    updateSubjectDto: UpdateTeacherDto,
+  ): Promise<Teacher> {
+    const teacher = await this.findOne(id_teacher);
+    Object.assign(teacher, updateSubjectDto);
+    return this.teacherRepository.save(teacher);
+  }
 
-//   async remove(id: number): Promise<void> {
-//     await this.teacherRepository.delete(id);
-//   }
-// }
+  async remove(id_teacher: number): Promise<void> {
+    const teacher = await this.findOne(id_teacher);
+    await this.teacherRepository.remove(teacher);
+  }
+}

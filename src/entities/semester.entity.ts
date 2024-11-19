@@ -8,6 +8,7 @@ import {
 import { Year } from './year.entity';
 import { Subject } from './subject.entity';
 import { Week } from './week.entity';
+import { Teacher } from './teacher.entity';
 
 @Entity()
 export class Semester {
@@ -31,6 +32,9 @@ export class Semester {
 
   @OneToMany(() => Subject, (subject) => subject.semester)
   subjects: Subject[];
+  
+  @OneToMany(() => Teacher, (teacher) => teacher.semester)
+  teacher: Teacher[];
 
   @OneToMany(() => Week, (week) => week.semester)
   weeks: Week[];

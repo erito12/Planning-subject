@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Course } from './course.entity';
 import { Semester } from './semester.entity';
-import { Teacher } from './teacher.entity';
+
 
 @Entity()
 export class Year {
@@ -22,7 +22,4 @@ export class Year {
 
   @OneToMany(() => Semester, (semester) => semester.year)
   semesters: Semester[];
-
-  @OneToMany(() => Teacher, (teacher) => teacher.year)
-  teacher: Teacher[];
 }
