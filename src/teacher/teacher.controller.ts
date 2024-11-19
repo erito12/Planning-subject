@@ -9,13 +9,12 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { Subject } from 'src/entities/subject.entity';
 import { TeacherService } from './teacher.service';
 import { CreateTeacherDto, UpdateTeacherDto } from './dto/dto_teacher';
 import { Teacher } from 'src/entities/teacher.entity';
 
-@ApiTags('subject')
-@Controller('subject')
+@ApiTags('teacher')
+@Controller('teacher')
 export class TeacherController {
   constructor(private readonly teacherService: TeacherService) {}
 

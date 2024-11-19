@@ -35,13 +35,19 @@ export class TeacherService {
         `La asignatura con ID ${createTeacherDto.subjectId}  no existe.`,
       );
     }
+    // Verificar si la asignatura está asociada al semestre
+    if (subject.semester.id_semester !== semester.id_semester) {
+      throw new BadRequestException(
+        `La asignatura con ID ${createTeacherDto.subjectId} no está asociada al semestre con ID ${createTeacherDto.semesterId}.`,
+      );
+    }
     const teacher = new Teacher();
     teacher.fullName = createTeacherDto.fullName;
     teacher.academicDegree = createTeacherDto.academicDegree;
     teacher.semester = semester;
     teacher.subject = subject;
 
-    return this.teacherRepository.save(subject);
+    return this.teacherRepository.save(teacher);
   }
 
   async findAll(): Promise<Teacher[]> {
