@@ -9,13 +9,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Semester } from 'src/entities/semester.entity';
 import { CreateSemesterDto, UpdateSemesterDto } from './dto/dto_semester';
 import { YearService } from 'src/year/year.service';
-import { SemesterController } from './semester.controller';
+import { Week } from 'src/entities/week.entity';
 
 @Injectable()
 export class SemesterService {
   constructor(
     @InjectRepository(Semester)
     private readonly semesterRepository: Repository<Semester>,
+    @InjectRepository(Week) // Inyectar el repositorio de Week
+    private readonly weekRepository: Repository<Week>,
     private readonly yearService: YearService,
   ) {}
 
@@ -54,7 +56,36 @@ export class SemesterService {
     semester.totalWeeks = totalWeeks; // Asignar el total de semanas calculado
     semester.year = year;
 
-    return this.semesterRepository.save(semester);
+    const savedSemester = await this.semesterRepository.save(semester);
+
+    // Crear semanas después de guardar el semestre
+    await this.createWeeks(savedSemester, startDate, totalWeeks);
+
+    return savedSemester;
+  }
+  private async createWeeks(
+    semester: Semester,
+    startDate: Date,
+    totalWeeks: number,
+  ): Promise<void> {
+    const weeks: Week[] = [];
+
+    for (let i = 0; i < totalWeeks; i++) {
+      const weekStartDate = new Date(startDate);
+      weekStartDate.setDate(startDate.getDate() + i * 7);
+      const weekEndDate = new Date(weekStartDate);
+      weekEndDate.setDate(weekStartDate.getDate() + 6); // Fin de semana es 6 días después
+
+      const week = new Week();
+      week.number_week = i + 1; // Número de semana comienza desde 1
+      week.startDateWeek = weekStartDate;
+      week.endDateWeek = weekEndDate;
+      week.semester = semester; // Asociar la semana con el semestre
+
+      weeks.push(week);
+    }
+    // Guardar todas las semanas en la base de datos
+    await this.weekRepository.save(weeks);
   }
 
   async findAll(): Promise<Semester[]> {

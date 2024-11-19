@@ -14,9 +14,7 @@ export class CreateTeacherDto {
   @IsString()
   academicDegree: string;
 
-  @ApiProperty({ description: 'ID del Semestre asociado' })
-  @IsNotEmpty()
-  semesterId: number; // ID del semestre asociado
+
 
   @ApiProperty({ description: 'ID del Semestre asociado' })
   @IsNotEmpty()

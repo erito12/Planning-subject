@@ -27,6 +27,7 @@ export class YearService {
     const year = new Year();
 
     year.course = course;
+    year.name_year = createYearDto.name_year;
 
     return this.yearRepository.save(year);
   }
