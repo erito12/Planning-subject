@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FrenquencyWeekService } from './frenquency_week.service';
+import { FrequencyWeekService } from './frequency_week.service';
 
 describe('FrenquencyWeekService', () => {
-  let service: FrenquencyWeekService;
+  let service: FrequencyWeekService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [FrenquencyWeekService],
+      providers: [FrequencyWeekService],
     }).compile();
 
-    service = module.get<FrenquencyWeekService>(FrenquencyWeekService);
+    service = module.get<FrequencyWeekService>(FrequencyWeekService);
   });
 
   it('should be defined', () => {

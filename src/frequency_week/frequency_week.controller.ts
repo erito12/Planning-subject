@@ -1,4 +1,4 @@
 import { Controller } from '@nestjs/common';
 
 @Controller('frenquency-week')
-export class FrenquencyWeekController {}
+export class FrequencyWeekController {}
