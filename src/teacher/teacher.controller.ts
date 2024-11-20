@@ -21,8 +21,8 @@ export class TeacherController {
   @Post()
   @ApiOperation({ summary: 'Crear un profesor' })
   @ApiResponse({ status: 201, description: 'La asignatura ha sido creado.' })
-  async create(@Body() teacherSubjectDto: CreateTeacherDto): Promise<Teacher> {
-    return this.teacherService.create(teacherSubjectDto);
+  async create(@Body() createTeachertDto: CreateTeacherDto): Promise<Teacher> {
+    return this.teacherService.create(createTeachertDto);
   }
 
   @Get()

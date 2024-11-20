@@ -10,7 +10,7 @@ export class WeekController {
 
   @ApiOperation({ summary: 'Buscar todas las semanas' })
   @ApiResponse({ status: 201, description: 'Busqueda Exitosa' })
-  @Get(':id')
+  @Get(':id_semestre')
   async getWeek(@Param('id') id: number): Promise<Week[]> {
     return this.weekService.findWeeksBySemester(id);
   }

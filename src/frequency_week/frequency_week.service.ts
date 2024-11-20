@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Frequency } from 'src/entities/frequency.entity';
@@ -10,57 +14,59 @@ import { CreateFrequencyDto } from './dto/dto_frquency';
 export class FrequencyWeekService {
   constructor(
     @InjectRepository(Frequency)
-    private readonly frequencyRepository: Repository <Frequency>,
+    private readonly frequencyRepository: Repository<Frequency>,
     private readonly weekService: WeekService,
     private readonly subjectService: SubjectService,
   ) {}
 
   async create(createFrequencyDto: CreateFrequencyDto): Promise<Frequency> {
+    // const week = await this.weekService.findWeekById(createFrequencyDto.weekId);
     const subject = await this.subjectService.findOne(
-      createTeacherDto.subjectId,
+      createFrequencyDto.subjectId,
     );
     if (!subject) {
       throw new BadRequestException(
-        `La asignatura con ID ${createTeacherDto.subjectId}  no existe.`,
+        `La asignatura con ID ${createFrequencyDto.subjectId}  no existe.`,
       );
     }
 
-    const teacher = new Teacher();
-    teacher.fullName = createTeacherDto.fullName;
-    teacher.academicDegree = createTeacherDto.academicDegree;
-    teacher.subject = subject;
+    const frequency = new Frequency();
+    frequency.frequencyType = createFrequencyDto.frequencyType;
+    frequency.numberFrequency = Number(createFrequencyDto.numberFrequency);
+    frequency.subject = subject;
+    // frequency.week = week;
 
-    return this.teacherRepository.save(teacher);
+    return this.frequencyRepository.save(frequency);
   }
 
-  async findAll(): Promise<Teacher[]> {
-    return this.teacherRepository.find({ relations: ['semester', 'subject'] });
-  }
-
-  async findOne(id_teacher: number): Promise<Teacher> {
-    const teacher = await this.teacherRepository.findOne({
-      where: { id_teacher },
-      relations: ['semester', 'subject'],
+  async findAll(): Promise<Frequency[]> {
+    return this.frequencyRepository.find({
+      relations: ['week', 'subject'],
     });
-    if (!teacher) {
-      throw new NotFoundException(`Year with ID ${id_teacher} not found`);
+  }
+
+  async findOne(id_frequency: number): Promise<Frequency> {
+    const frequency = await this.frequencyRepository.findOne({
+      where: { id_frequency },
+      relations: ['week', 'subject'],
+    });
+    if (!frequency) {
+      throw new NotFoundException(`Year with ID ${id_frequency} not found`);
     }
-    return teacher;
+    return frequency;
   }
 
-  async update(
-    id_teacher: number,
-    updateSubjectDto: UpdateTeacherDto,
-  ): Promise<Teacher> {
-    const teacher = await this.findOne(id_teacher);
-    Object.assign(teacher, updateSubjectDto);
-    return this.teacherRepository.save(teacher);
+  // async update(
+  //   id_frequency: number,
+  //   updateSubjectDto: UpdateFrequencyDto,
+  // ): Promise<Teacher> {
+  //   const teacher = await this.findOne(id_teacher);
+  //   Object.assign(teacher, updateSubjectDto);
+  //   return this.teacherRepository.save(teacher);
+  // }
+
+  async remove(id_frequency: number): Promise<void> {
+    const frequency = await this.findOne(id_frequency);
+    await this.frequencyRepository.remove(frequency);
   }
-
-  async remove(id_teacher: number): Promise<void> {
-    const teacher = await this.findOne(id_teacher);
-    await this.teacherRepository.remove(teacher);
-  }
-
-
 }

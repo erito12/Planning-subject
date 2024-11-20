@@ -6,13 +6,13 @@ import { SubjectType } from 'src/common/enums/subject-type.enum';
 @Entity()
 export class Frequency {
   @PrimaryGeneratedColumn()
-  id: number;
+  id_frequency: number;
 
   @Column()
   frequencyType: SubjectType;
 
   @Column()
-  numberFrequency: string;
+  numberFrequency: number;
 
   @ManyToOne(() => Week, (week) => week.frequencies)
   week: Week;
