@@ -10,11 +10,12 @@ export class WeekService {
     private readonly weekRepository: Repository<Week>,
   ) {}
   // Método para encontrar una semana por ID
-
-  async findWeekById(id_week: number): Promise<Week> {
-    const week = await this.weekRepository.findOne({ where: { id_week } });
+  async findWeekById(weekId: number): Promise<Week> {
+    const week = await this.weekRepository.findOne({
+      where: { id_week: weekId },
+    });
     if (!week) {
-      throw new NotFoundException(`Semana con ID ${id_week} no encontrada`);
+      throw new NotFoundException(`Semana con ID ${weekId} no encontrada`);
     }
     return week;
   }
