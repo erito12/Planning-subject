@@ -20,7 +20,7 @@ export class FrequencyWeekController {
   @ApiOperation({ summary: 'Crear un profesor' })
   @ApiResponse({ status: 201, description: 'La asignatura ha sido creado.' })
   async create(
-    @Body() createFrequencyDto: CreateFrequencyDto,
+    @Param() createFrequencyDto: CreateFrequencyDto,
   ): Promise<Frequency> {
     return this.frequencyService.create(createFrequencyDto);
   }
