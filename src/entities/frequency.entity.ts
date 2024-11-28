@@ -9,7 +9,7 @@ export class Frequency {
   id_frequency: number;
 
   @Column()
-  frequencyType: SubjectType;
+  frequencyType: string;
 
   @Column()
   numberFrequency: number;

@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CreateCourseDto, UpdateCourseDto } from './dto/dto_course';
 import { CourseService } from './course.service';
@@ -40,7 +41,7 @@ export class CourseController {
   @ApiResponse({ status: 404, description: 'Curso no encontrado.' })
   async update(
     @Param('id') id: number,
-    @Body() updateCourseDto: UpdateCourseDto,
+    @Query() updateCourseDto: UpdateCourseDto,
   ): Promise<Course> {
     return this.courseService.update(id, updateCourseDto);
   }

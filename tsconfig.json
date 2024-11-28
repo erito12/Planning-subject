@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -17,6 +18,8 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
-    
+  },
+  "scripts": {
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   }
 }
