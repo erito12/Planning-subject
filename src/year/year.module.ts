@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CourseModule } from 'course/course.module';
+
+import { Year } from 'entities/year.entity';
 import { YearService } from './year.service';
 import { YearController } from './year.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Year } from 'src/entities/year.entity';
-import { CourseModule } from 'src/course/course.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Year]), CourseModule],

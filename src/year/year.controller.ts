@@ -11,7 +11,7 @@ import { YearService } from './year.service';
 
 import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { CreateYearDto, UpdateYearDto } from './dto/dto_year';
-import { Year } from 'src/entities/year.entity';
+import { Year } from 'entities/year.entity';
 
 @ApiTags('years')
 @Controller('years')

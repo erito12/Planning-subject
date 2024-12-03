@@ -10,15 +10,37 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "entities/*": ["entities/*"],
+      "week/*": ["week/*"],
+      "year/*": ["year/*"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": [
+      "node", // Asegúrate de incluir 'node' si lo necesitas
+      "babel__core",
+      "babel__generator",
+      "babel__template",
+      "babel__traverse",
+      "body-parser",
+      "connect",
+      "cookiejar",
+      "estree",
+      "express",
+      "express-serve-static-core",
+      "graceful-fs",
+      "http-errors"
+    ]
   },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
   "scripts": {
     "test:e2e": "jest --config ./test/jest-e2e.json"
   }

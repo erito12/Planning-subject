@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CourseController } from './course.controller';
 import { CourseService } from './course.service';
 import { CreateCourseDto, UpdateCourseDto } from './dto/dto_course';
-import { Course } from 'src/entities/course.entity';
 
 describe('CourseController', () => {
   let controller: CourseController;

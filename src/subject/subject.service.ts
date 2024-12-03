@@ -4,10 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Subject } from 'src/entities/subject.entity';
-import { SemesterService } from 'src/semester/semester.service';
 import { Repository } from 'typeorm';
+
 import { CreateSubjectDto, UpdateSubjectDto } from './dto/dto_subject';
+import { Subject } from 'entities/subject.entity';
+import { SemesterService } from 'semester/semester.service';
 
 @Injectable()
 export class SubjectService {
@@ -23,7 +24,7 @@ export class SubjectService {
     );
     if (!semester) {
       throw new BadRequestException(
-        `El curso con ID ${createSubjectDto.semesterId} no existe.`,
+        `El semestre con ID ${createSubjectDto.semesterId} no existe.`,
       );
     }
     const subject = new Subject();
@@ -44,7 +45,7 @@ export class SubjectService {
       relations: ['semester'],
     });
     if (!subject) {
-      throw new NotFoundException(`Year with ID ${id_subject} not found`);
+      throw new NotFoundException(`Subject with ID ${id_subject} not found`);
     }
     return subject;
   }

@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Teacher } from 'src/entities/teacher.entity';
 
-import { SubjectService } from 'src/subject/subject.service';
 import { CreateTeacherDto, UpdateTeacherDto } from './dto/dto_teacher';
+import { Teacher } from 'entities/teacher.entity';
+import { SubjectService } from 'subject/subject.service';
 
 @Injectable()
 export class TeacherService {
@@ -47,7 +47,7 @@ export class TeacherService {
       relations: ['semester', 'subject'],
     });
     if (!teacher) {
-      throw new NotFoundException(`Year with ID ${id_teacher} not found`);
+      throw new NotFoundException(`Teacher with ID ${id_teacher} not found`);
     }
     return teacher;
   }

@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+
 import { Week } from './week.entity';
 import { Subject } from './subject.entity';
-import { SubjectType } from 'src/common/enums/subject-type.enum';
 
 @Entity()
 export class Frequency {

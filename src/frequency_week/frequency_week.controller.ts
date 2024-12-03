@@ -7,18 +7,20 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { FrequencyWeekService } from './frequency_week.service';
+
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { FrequencyWeekService } from './frequency_week.service';
 import { CreateFrequencyDto } from './dto/dto_frquency';
-import { Frequency } from 'src/entities/frequency.entity';
+import { Frequency } from 'entities/frequency.entity';
+
 
 @Controller('frenquency-week')
 export class FrequencyWeekController {
   constructor(private readonly frequencyService: FrequencyWeekService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Crear un profesor' })
-  @ApiResponse({ status: 201, description: 'La asignatura ha sido creado.' })
+  @ApiOperation({ summary: 'Crear una frecuencia' })
+  @ApiResponse({ status: 201, description: 'La frecuencia ha sido creada.' })
   async create(
     @Body() createFrequencyDto: CreateFrequencyDto,
   ): Promise<Frequency> {
@@ -26,16 +28,19 @@ export class FrequencyWeekController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todos los profesores' })
-  @ApiResponse({ status: 200, description: 'Lista de profesores.' })
+  @ApiOperation({ summary: 'Obtener todas frecuencias' })
+  @ApiResponse({ status: 200, description: 'Lista de frecuencias.' })
   async findAll(): Promise<Frequency[]> {
     return this.frequencyService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Obtener un año por ID' })
-  @ApiResponse({ status: 200, description: 'El año encontrado.' })
-  @ApiResponse({ status: 404, description: 'Año no encontrado.' })
+  @ApiOperation({ summary: 'Obtener una frecuencia por ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'La frecuencia ha sido encontrada.',
+  })
+  @ApiResponse({ status: 404, description: 'Frecuencia no encontrada.' })
   async findOne(@Param('id_frequecy') id: number): Promise<Frequency> {
     return this.frequencyService.findOne(id);
   }
@@ -52,8 +57,8 @@ export class FrequencyWeekController {
   // }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Eliminar un año' })
-  @ApiResponse({ status: 204, description: 'El año ha sido eliminado.' })
+  @ApiOperation({ summary: 'Eliminar una frecuencia' })
+  @ApiResponse({ status: 204, description: 'La frecuencia ha sido eliminada.' })
   async remove(@Param('id') id: number): Promise<void> {
     return this.frequencyService.remove(id);
   }

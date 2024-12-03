@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Week } from 'src/entities/week.entity';
+import { Week } from 'entities/week.entity';
+
 import { Repository } from 'typeorm';
 
 @Injectable()

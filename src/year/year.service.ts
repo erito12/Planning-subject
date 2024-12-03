@@ -3,11 +3,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Year } from 'src/entities/year.entity';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import { CreateYearDto, UpdateYearDto } from './dto/dto_year';
-import { CourseService } from 'src/course/course.service';
+import { Year } from 'entities/year.entity';
+import { CourseService } from 'course/course.service';
 
 @Injectable()
 export class YearService {

@@ -6,10 +6,11 @@ import {
 
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Semester } from 'src/entities/semester.entity';
+
 import { CreateSemesterDto, UpdateSemesterDto } from './dto/dto_semester';
-import { YearService } from 'src/year/year.service';
-import { Week } from 'src/entities/week.entity';
+import { Semester } from 'entities/semester.entity';
+import { Week } from 'entities/week.entity';
+import { YearService } from 'year/year.service';
 
 @Injectable()
 export class SemesterService {

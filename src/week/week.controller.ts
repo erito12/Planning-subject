@@ -1,7 +1,8 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
-import { WeekService } from './week.service';
-import { Week } from 'src/entities/week.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { WeekService } from './week.service';
+import { Week } from 'entities/week.entity';
 
 @ApiTags('week')
 @Controller('week')

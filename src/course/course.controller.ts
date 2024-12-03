@@ -8,10 +8,12 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { CreateCourseDto, UpdateCourseDto } from './dto/dto_course';
-import { CourseService } from './course.service';
-import { Course } from 'src/entities/course.entity';
 import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { CourseService } from './course.service';
+import { CreateCourseDto, UpdateCourseDto } from './dto/dto_course';
+import { Course } from 'entities/course.entity';
+
+
 
 @ApiTags('courses') // Etiqueta para la documentación Swagger
 @Controller('courses')

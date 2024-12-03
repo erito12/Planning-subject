@@ -5,10 +5,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, In, Not, Repository } from 'typeorm';
-import { Frequency } from 'src/entities/frequency.entity';
-import { SubjectService } from 'src/subject/subject.service';
-import { WeekService } from 'src/week/week.service';
+
 import { CreateFrequencyDto } from './dto/dto_frquency';
+import { Frequency } from 'entities/frequency.entity';
+import { WeekService } from 'week/week.service';
+import { SubjectService } from 'subject/subject.service';
 
 @Injectable()
 export class FrequencyWeekService {
@@ -26,9 +27,9 @@ export class FrequencyWeekService {
     const overlappingFrequencies = await this.frequencyRepository.find({
       where: {
         week: { id_week: weekId },
-        frequencyType: In(['seminario', 'prueba parcial', 'final']), // Usa In para múltiples valores
+        frequencyType: In(['seminario', 'prueba parcial', 'prueba final']), // Usa In para múltiples valores
         subject: { id_subject: Not(subjectId) }, // Excluye la asignatura actual
-      } as FindOptionsWhere<Frequency>, // Asegúrate de que TypeORM reconozca el tipo
+      } as FindOptionsWhere<Frequency>, 
       relations: ['subject'],
     });
     console.log(
@@ -52,7 +53,7 @@ export class FrequencyWeekService {
   private async checkConferencePercentage(subjectId: number): Promise<boolean> {
     const conferenceCount = await this.frequencyRepository.count({
       where: {
-        subject: { id_subject: subjectId }, // Asegúrate de que 'subject' sea una relación
+        subject: { id_subject: subjectId }, 
         frequencyType: 'conferencia',
       },
     });
@@ -94,7 +95,7 @@ export class FrequencyWeekService {
     frequency.frequencyType = createFrequencyDto.frequencyType;
     frequency.numberFrequency = Number(createFrequencyDto.numberFrequency);
     frequency.subject = subject;
-    frequency.week = week; 
+    frequency.week = week;
 
     // Guardamos la nueva frecuencia
     const savedFrequency = await this.frequencyRepository.save(frequency);

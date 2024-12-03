@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-import { SubjectType } from 'src/common/enums/subject-type.enum';
+
 
 export class CreateFrequencyDto {
   @IsString()
@@ -18,11 +18,11 @@ export class CreateFrequencyDto {
   })
   numberFrequency: number;
 
-  @ApiProperty({ description: 'ID del Semestre asociado' })
+  @ApiProperty({ description: 'ID de la asignatura asociada' })
   @IsNotEmpty()
   subjectId: number;
 
-  @ApiProperty({ description: 'ID del Semestre asociado' })
+  @ApiProperty({ description: 'ID de la semana asociada' })
   @IsNotEmpty()
   weekId: number;
 }

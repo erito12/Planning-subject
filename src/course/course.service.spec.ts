@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CourseService } from './course.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Course } from 'src/entities/course.entity';
 import { Repository } from 'typeorm';
+
 import { CreateCourseDto, UpdateCourseDto } from './dto/dto_course';
+import { CourseService } from './course.service';
+import { Course } from 'entities/course.entity';
 
 describe('CourseService', () => {
   let service: CourseService;

@@ -2,8 +2,9 @@ import { forwardRef, Module } from '@nestjs/common';
 import { WeekController } from './week.controller';
 import { WeekService } from './week.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Week } from 'src/entities/week.entity';
-import { SemesterModule } from 'src/semester/semester.module';
+import { SemesterModule } from 'semester/semester.module';
+import { Week } from 'entities/week.entity';
+
 
 @Module({
   imports: [TypeOrmModule.forFeature([Week]), forwardRef(() => SemesterModule)],
